@@ -44,7 +44,8 @@ const Register = () => {
     e.preventDefault();
     //if data provided by user is valid call api else show the toast error
     if (handleValidation()) {
-      const { password, confirmPassword, username, email } = values;
+      console.log("Here in validation", registerRoute);
+      const { password, username, email } = values;
       const { data } = await axios.post(
         registerRoute,
         username,
@@ -64,7 +65,7 @@ const Register = () => {
         <form onSubmit={handleSubmit}>
           <div className="brand">
             <img src={Logo} alt="logo" />
-            <h1>Chattfy</h1>
+            <h1>Chattify</h1>
           </div>
           <input
             type="text"
