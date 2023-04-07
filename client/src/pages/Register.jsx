@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styled from "styled-components";
@@ -8,16 +8,17 @@ import Logo from "../assets/logo.svg";
 import { registerRoute } from "../utils/APIRoutes";
 
 const Register = () => {
+  const navigate = useNavigate();
   const [values, setValues] = useState({
     username: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
-
+  //Pop-up error message
   const toastOptions = {
     position: "bottom-right",
-    autoClose: 8000,
+    autoClose: 5000,
     pauseOnHover: true,
     draggable: true,
     theme: "dark",
@@ -31,27 +32,35 @@ const Register = () => {
     } else if (username.length < 3) {
       toast.error("Username must be 3 or more characters", toastOptions);
       return false;
-    } else if (password.length < 8) {
+    } else if (password.length < 4) {
       toast.error("Password must be 8 or more characters", toastOptions);
       return false;
     } else if (email === "") {
       toast.error("Email is required", toastOptions);
       return false;
     }
+    return true;
   };
   //Form submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //if data provided by user is valid call api else show the toast error
+    // check if data provided by user is valid and call api, else show the toast error
     if (handleValidation()) {
-      console.log("Here in validation", registerRoute);
-      const { password, username, email } = values;
-      const { data } = await axios.post(
-        registerRoute,
+      const { email, username, password } = values;
+      const { data } = await axios.post(registerRoute, {
         username,
         email,
-        password
-      );
+        password,
+      });
+      if (data.status === false) {
+        toast.error(data.msg, toastOptions);
+      }
+      // if data is valid, store in local storage and
+      // redirect user to homepage("/") using navigate
+      if (data.status === true) {
+        localStorage.setItem("chat-app-user", JSON.stringify(data.user));
+        navigate("/login");
+      }
     }
   };
   //form inputs handler
