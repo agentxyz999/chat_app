@@ -21,6 +21,13 @@ const Login = () => {
     draggable: true,
     theme: "dark",
   };
+  //if user is logged-in(saved in localStorage) redirect to homepage
+  useEffect(() => {
+    if (localStorage.getItem("chat-app-user")) {
+      navigate("/");
+    }
+  }, []);
+
   //login form input validation
   const handleValidation = () => {
     const { password, username } = values;

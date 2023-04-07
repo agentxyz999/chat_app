@@ -23,6 +23,7 @@ const Register = () => {
     draggable: true,
     theme: "dark",
   };
+
   //form input validation
   const handleValidation = () => {
     const { password, confirmPassword, username, email } = values;
