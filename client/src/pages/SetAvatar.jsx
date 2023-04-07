@@ -24,6 +24,7 @@ const SetAvatar = () => {
     draggable: true,
     theme: "dark",
   };
+  //set avatar for the user
   const setProfilePicture = async () => {
     if (selectedAvatar === undefined) {
       toast.error("Please select an avatar", toastOptions);
@@ -65,6 +66,13 @@ const SetAvatar = () => {
     };
     fetchAvatar();
   }, [api]);
+
+  //if no user data in localStorage(user not logged-in)
+  useEffect(() => {
+    if (!localStorage.getItem("chat-app-user")) {
+      navigate("/login");
+    }
+  }, []);
   return (
     <>
       {isLoading ? (
