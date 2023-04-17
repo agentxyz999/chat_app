@@ -11,7 +11,7 @@ const Logout = () => {
     navigate("/login");
   };
   return (
-    <Button>
+    <Button onClick={handleClick}>
       <BiPowerOff />
     </Button>
   );
