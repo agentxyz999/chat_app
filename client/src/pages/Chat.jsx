@@ -8,6 +8,7 @@ import Contacts from "../components/Contacts";
 const Chat = () => {
   const [contacts, setContacts] = useState([]);
   const [currentUser, setCurrentUser] = useState(undefined);
+  const [currentChat, setCurrentChat] = useState(undefined);
   const navigate = useNavigate();
 
   //check if user is logged in by key in local storage
@@ -22,31 +23,35 @@ const Chat = () => {
     };
     checkIsUserLoggedIn();
   }, []);
+
   //check if current user has set his/her avatar img and fetch contacts data from server
   //if not redirect user to setAvatar page
   useEffect(() => {
-    const checkUserAvatar = () => {
-      if (currentUser) {
-        if (currentUser.isAvatarImageSet) {
-          const data = axios
-            .get(`${allUsersRoute}/${currentUser._id}`)
-            .then((res) => {
-              setContacts(res.data);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        } else {
-          navigate("/setAvatar");
+    const checkUserAvatar = async () => {
+      if (currentUser && currentUser.isAvatarImageSet) {
+        try {
+          const res = await axios.get(`${allUsersRoute}/${currentUser._id}`);
+          setContacts(res.data);
+        } catch (err) {
+          console.log(err);
         }
+      } else if (currentUser) {
+        navigate("/setAvatar");
       }
     };
     checkUserAvatar();
   }, [currentUser]);
+  const handleChatChange = (chat) => {
+    setCurrentChat(chat);
+  };
   return (
     <Container>
       <div className="container">
-        <Contacts contacts={contacts} currentUser={currentUser} />
+        <Contacts
+          contacts={contacts}
+          currentUser={currentUser}
+          changeChat={handleChatChange}
+        />
       </div>
     </Container>
   );

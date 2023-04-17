@@ -75,7 +75,7 @@ const Register = () => {
         <form onSubmit={handleSubmit}>
           <div className="brand">
             <img src={Logo} alt="logo" />
-            <h1>Chattify</h1>
+            <h1>Hello.io</h1>
           </div>
           <input
             type="text"
