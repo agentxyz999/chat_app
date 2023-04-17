@@ -5,10 +5,10 @@ const userRoutes = require("./routes/userRoutes");
 
 const app = express();
 require("dotenv").config();
-
 app.use(cors());
 app.use(express.json());
 
+//any routes that begin with "/api/auth" should be handled by the userRoutes router
 app.use("/api/auth", userRoutes);
 
 mongoose
@@ -24,7 +24,7 @@ mongoose
     console.log(err.message);
   });
 
-//create a server
+//start the server and listen for incoming request on port specified
 const server = app.listen(process.env.PORT, () => {
   console.log(`Server started at port ${process.env.PORT}`);
 });

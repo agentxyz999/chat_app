@@ -25,18 +25,24 @@ const Chat = () => {
   //check if current user has set his/her avatar img and fetch contacts data from server
   //if not redirect user to setAvatar page
   useEffect(() => {
-    const checkUserAvatar = async () => {
+    const checkUserAvatar = () => {
       if (currentUser) {
         if (currentUser.isAvatarImageSet) {
-          const data = await axios.get(`${allUsersRoute}/${currentUser._id}`);
-          setContacts(data.data);
+          const data = axios
+            .get(`${allUsersRoute}/${currentUser._id}`)
+            .then((res) => {
+              setContacts(res.data);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         } else {
           navigate("/setAvatar");
         }
       }
     };
     checkUserAvatar();
-  }, []);
+  }, [currentUser]);
   return (
     <Container>
       <div className="container">
