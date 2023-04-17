@@ -13,7 +13,7 @@ const ChatInput = () => {
     setShowEmjPicker(!showEmjPicker);
   };
   //emoji selection
-  const handleEmojiClick = (e, emoji) => {
+  const handleEmojiClick = (emoji) => {
     let message = msg;
     message += emoji.emoji;
     setMsg(message);
@@ -27,7 +27,7 @@ const ChatInput = () => {
           {showEmjPicker && <Picker onEmojiClick={handleEmojiClick} />}
         </div>
       </div>
-      <form className="input-container" onSubmit>
+      <form className="input-container">
         <input
           type="text"
           placeholder="type your message here"
@@ -68,23 +68,19 @@ const Container = styled.div`
         background-color: #080420;
         box-shadow: 0 5px 10px #9a86f3;
         border-color: #9a86f3;
-        .emoji-scroll-wrapper::-webkit-scrollbar {
-          background-color: #080420;
-          width: 5px;
-          &-thumb {
-            background-color: #9a86f3;
-          }
-        }
         .emoji-categories {
           button {
             filter: contrast(0);
           }
         }
-        .emoji-search {
+        .epr-search {
           background-color: transparent;
           border-color: #9a86f3;
         }
         .emoji-group:before {
+          background-color: #080420;
+        }
+        .epr-emoji-category > .epr-emoji-category-label {
           background-color: #080420;
         }
       }
