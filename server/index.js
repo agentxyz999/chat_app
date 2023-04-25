@@ -2,14 +2,16 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/userRoutes");
+const messagesRoutes = require("./routes/messagesRoutes");
 
 const app = express();
 require("dotenv").config();
 app.use(cors());
 app.use(express.json());
 
-//any routes that begin with "/api/auth" should be handled by the userRoutes router
+//any routes that begin with "/api/" should be handled by the userRoutes and messagesRoute router
 app.use("/api/auth", userRoutes);
+app.use("/api/messages", messagesRoutes);
 
 mongoose
   //from .env

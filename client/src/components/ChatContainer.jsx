@@ -5,7 +5,10 @@ import ChatInput from "./ChatInput";
 import Messages from "./Messages";
 
 const ChatContainer = ({ currentChat }) => {
-  const handleSendMsg = async (msg) => {};
+  //this function will be passed to ChatInput component
+  const handleSendMsg = async (msg) => {
+    console.log(msg);
+  };
   return (
     <Container>
       <div className="chat-header">
