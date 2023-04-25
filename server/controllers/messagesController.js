@@ -1,5 +1,6 @@
 const messageModel = require("../model/messageModel");
 
+//adding message to the database
 module.exports.addMessage = async (req, res, next) => {
   try {
     const { from, to, message } = req.body;
@@ -16,4 +17,26 @@ module.exports.addMessage = async (req, res, next) => {
     next(ex);
   }
 };
-module.exports.getAllMessages = async (req, res, next) => {};
+
+//getting all the message from the database
+module.exports.getAllMessages = async (req, res, next) => {
+  try {
+    const { from, to } = req.body;
+    const messages = await messageModel
+      .find({
+        users: {
+          $all: [from, to],
+        },
+      })
+      .sort({ updatedAt: 1 });
+    const projectMessages = messages.map((msg) => {
+      return {
+        fromSelf: msg.sender.toString() === from,
+        message: msg.message.text,
+      };
+    });
+    res.json(projectMessages);
+  } catch (ex) {
+    next(ex);
+  }
+};
