@@ -43,7 +43,7 @@ const ChatInput = ({ handleSendMsg }) => {
           onChange={(e) => setMsg(e.target.value)}
           value={msg}
         />
-        <button className="submit">
+        <button type="submit">
           <IoMdSend />
         </button>
       </form>
