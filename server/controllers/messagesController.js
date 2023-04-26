@@ -10,7 +10,6 @@ module.exports.addMessage = async (req, res, next) => {
       sender: from,
     });
     if (data) {
-      console.log(data);
       return res.json({ msg: "Message added to db." });
     }
     return res.json({ msg: "Failed to add message to db." });
