@@ -50,7 +50,8 @@ io.on("connection", (socket) => {
     const sendUserSocket = onlineUsers.get(data.to);
     //if user is online
     if (sendUserSocket) {
-      socket.to(sendUserSocket).emit("msg-receive", data.message);
+      //socket.to(sendUserSocket).emit("msg-receive", data.message);
+      socket.to(sendUserSocket).emit("msg-receive", data);
     }
   });
 });

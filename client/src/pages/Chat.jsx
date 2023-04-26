@@ -30,6 +30,7 @@ const Chat = () => {
 
   //check if current user has set his/her avatar img and fetch contacts data from server
   //if not redirect user to setAvatar page
+  //If the avatar image is set, the contacts data is fetched and stored in the contacts state variable.
   useEffect(() => {
     const checkUserAvatar = async () => {
       if (currentUser && currentUser.isAvatarImageSet) {
@@ -53,6 +54,7 @@ const Chat = () => {
       socket.current.emit("add-user", currentUser._id);
     }
   }, [currentUser]);
+
   const handleChatChange = (chat) => {
     setCurrentChat(chat);
   };

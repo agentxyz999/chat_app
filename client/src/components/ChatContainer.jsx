@@ -39,16 +39,31 @@ const ChatContainer = ({ currentChat, currentUser, socket }) => {
     msgs.push({ fromSelf: true, message: msg });
     setMessages(msgs);
   };
+  //This useEffect will handle the incoming messages.
+  //***Fixed the bug that the user can receive the message from other user
+  //even if the sender is not currently selected.
   useEffect(() => {
+    const handleMessage = (data) => {
+      if (currentChat._id.toString() === data.from.toString()) {
+        setArrivalMessage({ fromSelf: false, message: data.message });
+      }
+    };
     if (socket.current) {
-      socket.current.on("msg-receive", (msg) => {
-        setArrivalMessage({ fromSelf: false, message: msg });
-      });
+      socket.current.on("msg-receive", handleMessage);
     }
-  }, []);
+    //clean-up
+    return () => {
+      if (socket.current) {
+        socket.current.off("msg-receive", handleMessage);
+      }
+    };
+  }, [currentChat]);
+
   useEffect(() => {
     arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage]);
+
+  //scroll into the latest message
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
