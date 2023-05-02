@@ -37,10 +37,10 @@ const SetAvatar = () => {
         user.isAvatarImageSet = true;
         user.avatarImage = data.image;
         localStorage.setItem("chat-app-user", JSON.stringify(user));
-        navigate("/");
+        navigate("/login");
       } else {
         toast.error(
-          "Error setting the avatar. Please try again later",
+          "Error setting the avatar. Please try again. . .",
           toastOptions
         );
       }
@@ -82,7 +82,7 @@ const SetAvatar = () => {
       ) : (
         <Container>
           <div className="title-container">
-            <h1>Pick an Avatar as your profile picture</h1>
+            <h1>Select the avatar as your profile picture</h1>
           </div>
           <div className="avatars">
             {avatars.map((avatar, index) => {
