@@ -51,7 +51,7 @@ const SetAvatar = () => {
     const fetchAvatar = async () => {
       try {
         const data = [];
-        for (let i = 0; i < 1; i++) {
+        for (let i = 0; i < 2; i++) {
           const image = await axios.get(
             `${api}/${Math.round(Math.random() * 1000)}`
           );
